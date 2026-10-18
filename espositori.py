@@ -7,3 +7,13 @@ class Espositori:
 
     def __str__(self):
         return f"{self.__codice} {self.__nome} {self.__cognome}"
+
+    @property
+    def codice(self):
+        return self.__codice
+
+    def __eq__(self,other):
+        if other is None:
+            return False
+        else:
+            return self.__codice==other.codice

@@ -1,6 +1,4 @@
 import csv
-
-import espositori
 from stand import Stand
 from stand_prese import StandPrese
 from stand_premium import StandPremium
@@ -13,6 +11,7 @@ class LingottoFiere:
         self.__nome=nome
         self.__bancarelle=[]
         self.__espositors=[]
+
 
     @property
     def nome(self):
@@ -37,6 +36,14 @@ class LingottoFiere:
     @espositors.setter
     def espositors(self, espositors):
         self.__espositors = espositors
+
+    '''@property
+    def assegnato(self):
+        return self.__assegnato
+
+    @assegnato.setter
+    def assegnato(self, assegnato):
+        self.__assegnato = assegnato'''
 
     def __str__(self):
         return f"{self.__nome}"
@@ -91,10 +98,47 @@ class LingottoFiere:
         """Associa uno stand a un espositore"""
         # TODO
 
+        stand_trovato = None
+        for i in self.__bancarelle:
+            if i.codice==codice_stand:
+                stand_trovato=i
+                break
+        if stand_trovato is None:
+            raise Exception("Lo stand non esiste")
+
+        esp_trovato = None
+        for i in self.__espositors:
+            if i.codice == codice_espositore:
+                esp_trovato = i
+                break
+        if esp_trovato is None:
+            raise Exception("L'espositore non esiste")
+
+        if not stand_trovato.disponibile:
+            raise Exception("Lo stand non è disponibile")
+
+        for stand in self.__bancarelle:
+            if stand.espositore_assegnato==esp_trovato:
+                raise Exception("L'espositore non è disponibile")
+
+        stand_trovato.assegna_espositore(esp_trovato)
+
+
+
     def elenca_espositori(self):
         """Stampa l'elenco degli espositori mostrando, per ognuno, lo stand a cui è associato, quando applicabile """
         # TODO
+        for esp in self.__espositors:
+            for stand in self.__bancarelle:
+                if esp==stand.espositore_assegnato:
+                    print(f"{esp} - Stand associato: {stand.codice}")
+                    break
+            else:
+                print(f"{esp}")
+
 
     def stand_ordinati_per_prezzo(self):
         """Restituisce la lista ordinata degli stand in base al prezzo"""
         # TODO
+        l=sorted(self.__bancarelle)
+        return l
