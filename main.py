@@ -19,7 +19,7 @@ def main():
 
         if scelta == "1":
             nuovo_nome = input("Inserisci il nuovo nome del centro fieristico: ")
-            print(f"Nome aggiornato: {nuovo_nome}")
+            print(f"Nome aggiornato: {nuovo_nome}") # verifica
             # TODO: Aggiorna il nome del centro fieristico
 
         elif scelta == "2":
